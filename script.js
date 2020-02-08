@@ -1,3 +1,4 @@
+// When the user presses the enter button we will run the function to get recipes
 $(document).on('keypress',function(event) {
     if(event.which == 13 && event.target.id === 'recipeSearch') {
         event.preventDefault();
@@ -7,6 +8,7 @@ $(document).on('keypress',function(event) {
 
 });
 
+// when then user clicks the search button the app will run the function to find recipes
 $('#recipeSearchButton').on('click',function(event) {
     event.preventDefault();
     let inputValue = $('#recipeSearch');
@@ -17,6 +19,7 @@ $('#recipeSearchButton').on('click',function(event) {
 
 });
 
+//function to populate the array of recipes
 function getRecipeList (searchName){
     const edamamURL = `https://api.edamam.com/search?q=${searchName}&app_id=252cc057&app_key=26fd4bacc879752ae72c9f39cbf4e516&from=0&to=10&calories=591-722&health=alcohol-free`;
     $('.Recipes').empty();    
