@@ -11,10 +11,14 @@ $(document).on('keypress',function(event) {
 // when then user clicks the search button the app will run the function to find recipes
 $('#recipeSearchButton').on('click',function(event) {
     event.preventDefault();
-    let inputValue = $('#recipeSearch');
-    console.log(inputValue [0].value);
+    let inputValue = $('#recipeSearch')[0].value;
+    console.log(inputValue);
     
-    getRecipeList(inputValue);
+    if (!inputValue) {
+        showError(false);
+    } else {
+        getRecipeList(inputValue);
+    }
     
 
 });
@@ -27,22 +31,40 @@ function getRecipeList (searchName){
         url: edamamURL,
         method: 'GET'
     }).then(function(response){
-        console.log(response)
-        response.hits.map((i) => {
-            let container = $('<div>').attr('class', 'container-fluid');
-            let row = $('<div>').attr('class', 'row border').attr('data-nutrients', JSON.stringify(i.recipe.digest));
-            let foodImg = $('<img>').attr('class', 'col-md-4 h-25 w-25').attr('src', i.recipe.image);
-            let foodName = $('<div>').attr('class', 'col-md-4').text(i.recipe.label);
-            let calorieNutrients = $('<div>').attr('class', 'col-md-4').text('Calories: ' + Math.round(i.recipe.calories));       
-            row.append(foodImg, foodName, calorieNutrients);
-            container.append(row);
-            
-            $('.Recipes').append(container);
-        })
+        
+        if (!response || response.hits.length === 0) {
+            showError(false);
+        } else {
+            response.hits.map((i) => {
+                let container = $('<div>').attr('class', 'container-fluid');
+                let row = $('<div>').attr('class', 'row border').attr('data-nutrients', JSON.stringify(i.recipe.digest));
+                let foodImg = $('<img>').attr('class', 'col-md-4 h-25 w-25').attr('src', i.recipe.image);
+                let foodName = $('<div>').attr('class', 'col-md-4').text(i.recipe.label);
+                let calorieNutrients = $('<div>').attr('class', 'col-md-4').text('Calories: ' + Math.round(i.recipe.calories));       
+                row.append(foodImg, foodName, calorieNutrients);
+                container.append(row);
+                
+                $('.Recipes').append(container);
+            })
+        }
     
+    }).catch((err) => {
+        console.log(err);
+        showError(true);
     })
 }
 
-
-
+function showError(isAPIError) {
+    $.ajax({
+        method: 'GET',
+        url: 'https://api.spoonacular.com/food/jokes/random?apiKey=03bbe11b8f5b4c9e91360249bbc5613b'
+    }).then((joke) => {
+        var text = isAPIError ?
+            'Something went wrong,' :
+            'No items match your search,';
+        console.log(joke.text);
+        $('.modal-body').html(`${text} please try again and enjoy this funny food joke: <br><br>${joke.text}`)
+        $('#modal').modal();
+    })
+}
 
