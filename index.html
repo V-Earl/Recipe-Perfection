@@ -24,10 +24,26 @@
                     <!-- this is the where we are putting the user input based on food types -->
                     <input type="text" name="text" id="recipeSearch" class="search" placeholder="Search here!">
                     <input type="submit" name="submit" id="recipeSearchButton" class="submit" value="Search">
-                    <div class="Recipes">
-                        <!-- Will populate a list of recipes the API returns -->
+                    <div class="container-fluid Recipes">
+                        <!-- Will populate a list of recipes the API returns --> 
                     </div>
                 </form>
+            </div>
+            <div class="col-md-8">
+                <div class="container">
+                    <div class="row">
+                        <div class="media">
+                            <img id="recipe-img" class="mr-3">
+                            <div class="media-body">
+                                <h5 id="recipe-name" class="mt-0"></h5>
+                                <div id="recipe-description">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Populated with jQuery -->
             </div>
         </div>
     </div>

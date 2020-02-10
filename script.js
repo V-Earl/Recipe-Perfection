@@ -10,6 +10,7 @@ $(document).on('keypress',function(event) {
 
 // when then user clicks the search button the app will run the function to find recipes
 $('#recipeSearchButton').on('click',function(event) {
+
     event.preventDefault();
     let inputValue = $('#recipeSearch')[0].value;
     console.log(inputValue);
@@ -36,15 +37,14 @@ function getRecipeList (searchName){
             showError(false);
         } else {
             response.hits.map((i) => {
-                let container = $('<div>').attr('class', 'container-fluid');
-                let row = $('<div>').attr('class', 'row border').attr('data-nutrients', JSON.stringify(i.recipe.digest));
+                let div = $('<div>').attr('class', 'row border recipe').attr('data-nutrients', JSON.stringify(i));
                 let foodImg = $('<img>').attr('class', 'col-md-4 h-25 w-25').attr('src', i.recipe.image);
                 let foodName = $('<div>').attr('class', 'col-md-4').text(i.recipe.label);
                 let calorieNutrients = $('<div>').attr('class', 'col-md-4').text('Calories: ' + Math.round(i.recipe.calories));       
-                row.append(foodImg, foodName, calorieNutrients);
-                container.append(row);
+                div.append(foodImg, foodName, calorieNutrients);
+                // container.append(row);
                 
-                $('.Recipes').append(container);
+                $('.Recipes').append(div);
             })
         }
     
@@ -68,3 +68,37 @@ function showError(isAPIError) {
     })
 }
 
+$(document).on('click', '.recipe', function() {
+    let data = $(this).attr('data-nutrients');
+    let recipe = JSON.parse(data);
+    console.log(recipe);
+    let inputValue = $('#recipeSearch')[0].value;
+    let healthLabel = ''; 
+    let cautions = '';
+    let foodWords = ['tasty', 'succulent', 'delicious', 'scrumptious', 'divine', 'flavorful', 'mouthwatering', 'yummy']
+    let thisWord = foodWords[Math.floor(Math.random() * foodWords.length)];
+
+    recipe.recipe.healthLabels.map((h, i) => {
+        healthLabel = healthLabel + h;
+        
+        if (i != recipe.recipe.healthLabels.length) {
+            healthLabel + ', ';
+        }
+        
+    })
+
+    recipe.recipe.cautions.map((c, i) => {
+        cautions = cautions + c;
+        
+        if (i != recipe.recipe.cautions.length) {
+            cautions + ', ';
+        }
+        
+    })
+
+    console.log(JSON.parse(data));
+    $('#recipe-img').attr('src', recipe.recipe.image).attr('alt', recipe.recipe.label);
+    $('#recipe-name').text(recipe.recipe.label);
+    $('#recipe-description').html('This ' + thisWord + ' ' + inputValue + ' recipe is brought to you by ' + recipe.recipe.source + '.' + 
+        '<br>Health Labels: ' + healthLabel + '<br> Cautions: ' + cautions + '<br> Yealds: ' + recipe.recipe.yield + ' Servings');
+})
