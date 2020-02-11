@@ -36,11 +36,11 @@ function getRecipeList (searchName){
         if (!response || response.hits.length === 0) {
             showError(false);
         } else {
-            response.hits.map((i) => {
+            response.hits.map((i, index) => {
                 let div = $('<div>').attr('class', 'row border recipe').attr('data-nutrients', JSON.stringify(i));
-                let foodImg = $('<img>').attr('class', 'col-md-4 h-25 w-25').attr('src', i.recipe.image);
-                let foodName = $('<div>').attr('class', 'col-md-4').text(i.recipe.label);
-                let calorieNutrients = $('<div>').attr('class', 'col-md-4').text('Calories: ' + Math.round(i.recipe.calories));       
+                let foodImg = $('<img>').attr('class', 'col-md-4 col-sm-4 col-xs-4  h-25 w-25').attr('src', i.recipe.image);
+                let foodName = $('<div>').attr('class', 'col-md-4 col-sm-4 col-xs-4').text(i.recipe.label);
+                let calorieNutrients = $('<div>').attr('class', 'col-md-4 col-sm-4 col-xs-4').text('Calories: ' + Math.round(i.recipe.calories));       
                 div.append(foodImg, foodName, calorieNutrients);
                 // container.append(row);
                 
@@ -69,6 +69,8 @@ function showError(isAPIError) {
 }
 
 $(document).on('click', '.recipe', function() {
+    $('#ingredients').empty();
+    $('#nutrients').empty();
     let data = $(this).attr('data-nutrients');
     let recipe = JSON.parse(data);
     console.log(recipe);
@@ -101,4 +103,29 @@ $(document).on('click', '.recipe', function() {
     $('#recipe-name').text(recipe.recipe.label);
     $('#recipe-description').html('This ' + thisWord + ' ' + inputValue + ' recipe is brought to you by ' + recipe.recipe.source + '.' + 
         '<br>Health Labels: ' + healthLabel + '<br> Cautions: ' + cautions + '<br> Yealds: ' + recipe.recipe.yield + ' Servings');
+
+    // This is the ingredients   
+    let ingredientsDiv = $('#ingredients');
+    recipe.recipe.ingredientLines.map(i => {
+        let li = $('<li>').attr('class', 'list-group-item').text(i);
+        ingredientsDiv.append(li);
+    })
+
+    // nutrients area
+    let nutrientsId = $('#nutrients');
+    let nutrientHeader = $('<div>').attr('class', 'row border');
+    let labelHeader = $('<div>').attr('class', 'col-md-4 col-sm-4 col-xs-4 font-weight-bold').text('Nutrient');
+    let totalHeader = $('<div>').attr('class', 'col-md-4 col-sm-4 col-xs-4 font-weight-bold').text('Total');
+    let dailyHeader = $('<div>').attr('class', 'col-md-4 col-sm-4 col-xs-4 font-weight-bold').text('Daily Total');
+    nutrientHeader.append(labelHeader, totalHeader, dailyHeader);
+    nutrientsId.append(nutrientHeader);
+
+    recipe.recipe.digest.map(nutrient => {
+        let div = $('<div>').attr('class', 'row border');
+        let label = $('<div>').attr('class', 'col-md-4 col-sm-4 col-xs-4').text(nutrient.label);
+        let total = $('<div>').attr('class', 'col-md-4 col-sm-4 col-xs-4').text(Math.round(nutrient.total) + nutrient.unit);
+        let daily = $('<div>').attr('class', 'col-md-4 col-sm-4 col-xs-4').text(Math.round(nutrient.daily) + nutrient.unit);
+        div.append(label, total, daily);
+        nutrientsId.append(div);
+    })
 })

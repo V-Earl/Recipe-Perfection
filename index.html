@@ -19,7 +19,7 @@
     </div>
     <div class="container">
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
                 <form>
                     <!-- this is the where we are putting the user input based on food types -->
                     <input type="text" name="text" id="recipeSearch" class="search" placeholder="Search here!">
@@ -29,21 +29,25 @@
                     </div>
                 </form>
             </div>
-            <div class="col-md-8">
+            <div class="col-lg-8 col-md-6 col-sm-12 col-xs-12">
                 <div class="container">
                     <div class="row">
-                        <div class="media">
-                            <img id="recipe-img" class="mr-3">
-                            <div class="media-body">
-                                <h5 id="recipe-name" class="mt-0"></h5>
-                                <div id="recipe-description">
-                                </div>
+                        <div class="col-md-6 col-sm-6 col-xs-12"><img id="recipe-img"></div>
+                        <div class="col-md-6 col-sm-6 col-sm-12">
+                            <h5 id="recipe-name" class="mt-0"></h5>
+                            <div id="recipe-description">
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-md-6 col-sm-12 container-fluid">
+                            <ul id="ingredients" class="list-group"></ul>
+                        </div>
+                        <div id="nutrients" class="col-md-6 col-12-sm container-fluid">
+
+                        </div>
+                    </div>
                 </div>
-                
-                <!-- Populated with jQuery -->
             </div>
         </div>
     </div>
