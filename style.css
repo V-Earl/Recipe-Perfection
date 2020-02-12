@@ -1,0 +1,17 @@
+.recipe {
+    border-bottom: 1px solid #a0aec0 !important;
+}
+
+body {
+    background-image: url("./assets/default-image.jpg");
+    background-repeat: no-repeat;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+
+.font {
+    font-family: Avant Garde,Avantgarde,Century Gothic,CenturyGothic,AppleGothic,sans-serif;
+}
