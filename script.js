@@ -1,6 +1,6 @@
 // When the user presses the enter button we will run the function to get recipes
 $(document).on('keypress',function(event) {
-    if(event.which == 13 && event.target.id === 'recipeSearch' && allowSearch === true) {
+    if(event.which == 13 && event.target.id === 'recipeSearch') {
         $('#recipeSearch').attr('disabled', true);
         event.preventDefault();
         let inputValue = event.target.value;
@@ -58,6 +58,8 @@ function getRecipeList (searchName){
 }
 
 function showError(isAPIError) {
+    $('#recipeSearchButton').prop('disabled', false);
+    $('#recipeSearch').attr('disabled', false);
     $.ajax({
         method: 'GET',
         url: 'https://api.spoonacular.com/food/jokes/random?apiKey=03bbe11b8f5b4c9e91360249bbc5613b'
