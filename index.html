@@ -10,11 +10,17 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+
+        <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+
+        <link rel="stylesheet" href="style.css">
+
     <title>Recipe Perfection!</title>
 </head>
 <body>
-    <div class="jumbotron jumbotron-fluid text-center">
-        <h1 class="display-4">Welcome to Recipe Perfection!</h1>
+    <div class="jumbotron jumbotron-fluid text-center bg-gray-700">
+        <h1 class="display-4 animated slideInLeft slow text-teal-500">Welcome to Recipe Perfection!</h1>
         <!-- <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p> -->
     </div>
     <div class="container">
@@ -22,9 +28,9 @@
             <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
                 <form>
                     <!-- this is the where we are putting the user input based on food types -->
-                    <input type="text" name="text" id="recipeSearch" class="search" placeholder="Search here!">
-                    <input type="submit" name="submit" id="recipeSearchButton" class="submit" value="Search">
-                    <div class="container-fluid Recipes">
+                    <input type="text" name="text" id="recipeSearch" class="search font border-solid rounded p-1 border-2 border-gray-600" placeholder="Search here!">
+                    <input type="submit" name="submit" id="recipeSearchButton" class="submit font border rounded bg-teal-500 p-1 px-2 mb-4" value="Search">
+                    <div class="container-fluid font Recipes">
                         <!-- Will populate a list of recipes the API returns --> 
                     </div>
                 </form>
