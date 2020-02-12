@@ -15,3 +15,10 @@ body {
 .font {
     font-family: Avant Garde,Avantgarde,Century Gothic,CenturyGothic,AppleGothic,sans-serif;
 }
+
+.Recipes {
+    max-height: 50em;
+    margin-bottom: 10px;
+    overflow:scroll;
+    -webkit-overflow-scrolling: touch;
+}
