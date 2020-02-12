@@ -1,6 +1,7 @@
 // When the user presses the enter button we will run the function to get recipes
 $(document).on('keypress',function(event) {
-    if(event.which == 13 && event.target.id === 'recipeSearch') {
+    if(event.which == 13 && event.target.id === 'recipeSearch' && allowSearch === true) {
+        $('#recipeSearch').attr('disabled', true);
         event.preventDefault();
         let inputValue = event.target.value;
         getRecipeList(inputValue);
@@ -10,10 +11,9 @@ $(document).on('keypress',function(event) {
 
 // when then user clicks the search button the app will run the function to find recipes
 $('#recipeSearchButton').on('click',function(event) {
-
+    $('#recipeSearchButton').prop('disabled', true);
     event.preventDefault();
     let inputValue = $('#recipeSearch')[0].value;
-    console.log(inputValue);
     
     if (!inputValue) {
         showError(false);
@@ -26,8 +26,9 @@ $('#recipeSearchButton').on('click',function(event) {
 
 //function to populate the array of recipes
 function getRecipeList (searchName){
-    const edamamURL = `https://api.edamam.com/search?q=${searchName}&app_id=252cc057&app_key=26fd4bacc879752ae72c9f39cbf4e516&from=0&to=10&calories=591-722&health=alcohol-free`;
-    $('.Recipes').empty();    
+    const edamamURL = `https://api.edamam.com/search?q=${searchName}&app_id=77499a47&app_key=7f81ddd0b166a41e9d7c964bb2117d02&from=0&to=10&calories=591-722&health=alcohol-free`;
+    $('.Recipes').empty();  
+    // $('body').css('background-image', 'url("")');  
     $.ajax({
         url: edamamURL,
         method: 'GET'
@@ -37,14 +38,16 @@ function getRecipeList (searchName){
             showError(false);
         } else {
             response.hits.map((i, index) => {
-                let div = $('<div>').attr('class', 'row border recipe').attr('data-nutrients', JSON.stringify(i));
-                let foodImg = $('<img>').attr('class', 'col-md-4 col-sm-4 col-xs-4  h-25 w-25').attr('src', i.recipe.image);
-                let foodName = $('<div>').attr('class', 'col-md-4 col-sm-4 col-xs-4').text(i.recipe.label);
-                let calorieNutrients = $('<div>').attr('class', 'col-md-4 col-sm-4 col-xs-4').text('Calories: ' + Math.round(i.recipe.calories));       
-                div.append(foodImg, foodName, calorieNutrients);
-                // container.append(row);
-                
+                let div = $('<div>').attr('class', 'row border-bottom recipe bg-white mb-2 py-2').attr('data-nutrients', JSON.stringify(i));
+                let div2 = $('<div>').attr('class', 'col-md-4 col-sm-4 m-auto');
+                let foodImg = $('<img>').attr('src', i.recipe.image);
+                let foodName = $('<div>').attr('class', 'col-md-4 col-sm-4 m-auto').text(i.recipe.label);
+                let calorieNutrients = $('<div>').attr('class', 'col-md-4 col-sm-4 m-auto').text('Calories: ' + Math.round(i.recipe.calories));       
+                div2.append(foodImg);
+                div.append(div2, foodName, calorieNutrients);
                 $('.Recipes').append(div);
+                $('#recipeSearchButton').prop('disabled', false);
+                $('#recipeSearch').attr('disabled', false);
             })
         }
     
@@ -62,7 +65,6 @@ function showError(isAPIError) {
         var text = isAPIError ?
             'Something went wrong,' :
             'No items match your search,';
-        console.log(joke.text);
         $('.modal-body').html(`${text} please try again and enjoy this funny food joke: <br><br>${joke.text}`)
         $('#modal').modal();
     })
@@ -73,7 +75,6 @@ $(document).on('click', '.recipe', function() {
     $('#nutrients').empty();
     let data = $(this).attr('data-nutrients');
     let recipe = JSON.parse(data);
-    console.log(recipe);
     let inputValue = $('#recipeSearch')[0].value;
     let healthLabel = ''; 
     let cautions = '';
@@ -81,19 +82,23 @@ $(document).on('click', '.recipe', function() {
     let thisWord = foodWords[Math.floor(Math.random() * foodWords.length)];
 
     recipe.recipe.healthLabels.map((h, i) => {
-        healthLabel = healthLabel + h;
+        healthLabel += h;
         
-        if (i != recipe.recipe.healthLabels.length) {
-            healthLabel + ', ';
+        if (i != recipe.recipe.healthLabels.length - 1) {
+            healthLabel += ', ';
+        } else {
+            healthLabel += ' ';
         }
         
     })
 
     recipe.recipe.cautions.map((c, i) => {
-        cautions = cautions + c;
+        cautions += c;
         
-        if (i != recipe.recipe.cautions.length) {
-            cautions + ', ';
+        if (i != recipe.recipe.cautions.length - 1) {
+            cautions += ', ';
+        } else {
+            healthLabel += ' ';
         }
         
     })
