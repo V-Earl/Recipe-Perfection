@@ -109,7 +109,7 @@ $(document).on('click', '.recipe', function() {
     $('#recipe-img').attr('src', recipe.recipe.image).attr('alt', recipe.recipe.label);
     $('#recipe-name').text(recipe.recipe.label);
     $('#recipe-description').html('This ' + thisWord + ' ' + inputValue + ' recipe is brought to you by ' + recipe.recipe.source + '.' + 
-        '<br>Health Labels: ' + healthLabel + '<br> Cautions: ' + cautions + '<br> Yealds: ' + recipe.recipe.yield + ' Servings');
+        '<br>Health Labels: ' + healthLabel + '<br> Cautions: ' + cautions + '<br> Yields: ' + recipe.recipe.yield + ' Servings');
 
     // This is the ingredients   
     let ingredientsDiv = $('#ingredients');
@@ -120,7 +120,7 @@ $(document).on('click', '.recipe', function() {
 
     // nutrients area
     let nutrientsId = $('#nutrients');
-    let nutrientHeader = $('<div>').attr('class', 'row border');
+    let nutrientHeader = $('<div>').attr('class', 'row border nutrient-header');
     let labelHeader = $('<div>').attr('class', 'col-md-4 col-sm-4 col-xs-4 font-weight-bold').text('Nutrient');
     let totalHeader = $('<div>').attr('class', 'col-md-4 col-sm-4 col-xs-4 font-weight-bold').text('Total');
     let dailyHeader = $('<div>').attr('class', 'col-md-4 col-sm-4 col-xs-4 font-weight-bold').text('Daily Total');
